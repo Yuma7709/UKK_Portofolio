@@ -6,8 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = [
-        'nama',
-        'pesan'
-    ];
+    protected $fillable = ['nama', 'kesan', 'rating', 'pesan', 'owner_token'];
 }

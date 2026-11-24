@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Utama</title>
+    <title>Menu Admin</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -17,14 +17,14 @@
         }
 
         :root{
-            --primary:#00d4ff;
-            --secondary:#2563eb;
-            --dark:#020617;
-            --dark2:#0f172a;
-            --card:rgba(15,23,42,.85);
-            --border:rgba(255,255,255,.08);
-            --text:#f8fafc;
-            --muted:#94a3b8;
+            --primary:#f87171;
+            --secondary:#dc2626;
+            --dark:#0d0d10;
+            --dark2:#111114;
+            --card:rgba(17,17,20,.85);
+            --border:rgba(255,255,255,.1);
+            --text:#ececf0;
+            --muted:#a1a1aa;
             --shadow:0 15px 40px rgba(0,0,0,.35);
         }
 
@@ -36,8 +36,8 @@
             padding:20px;
             overflow-x:hidden;
             background:
-                radial-gradient(circle at top left, rgba(0,212,255,.15), transparent 25%),
-                radial-gradient(circle at bottom right, rgba(37,99,235,.15), transparent 25%),
+                radial-gradient(circle at top left, rgba(248,113,113,.15), transparent 25%),
+                radial-gradient(circle at bottom right, rgba(220,38,38,.15), transparent 25%),
                 linear-gradient(to bottom,var(--dark),var(--dark2));
         }
 
@@ -86,7 +86,7 @@
             position:absolute;
             width:220px;
             height:220px;
-            background:rgba(0,212,255,.08);
+            background:rgba(248,113,113,.08);
             border-radius:50%;
             top:-80px;
             right:-80px;
@@ -94,7 +94,7 @@
 
         .card:hover{
             transform:translateY(-10px);
-            border-color:rgba(0,212,255,.25);
+            border-color:rgba(248,113,113,.25);
         }
 
         .icon{
@@ -111,7 +111,7 @@
                 var(--primary),
                 var(--secondary)
             );
-            box-shadow:0 10px 25px rgba(0,212,255,.25);
+            box-shadow:0 10px 25px rgba(248,113,113,.25);
         }
 
         .card h2{
@@ -146,7 +146,7 @@
 
         .btn:hover{
             transform:translateY(-2px);
-            box-shadow:0 10px 25px rgba(0,212,255,.25);
+            box-shadow:0 10px 25px rgba(248,113,113,.25);
         }
 
         @media(max-width:700px){
@@ -162,6 +162,7 @@
         }
 
     </style>
+    <link rel="stylesheet" href="{{ asset('css/portfolio-theme.css') }}">
 </head>
 
 <body>
@@ -170,12 +171,12 @@
 
     <div class="title">
 
-        <h1>
-            Yuma Portfolio
+        <h1 class="brand-logo">
+            Porto<span>folio</span>
         </h1>
 
         <p>
-            Pilih halaman yang ingin dibuka
+            Halaman menu khusus admin
         </p>
 
     </div>
@@ -190,11 +191,11 @@
             </div>
 
             <h2>
-                Portfolio
+                Portofolio
             </h2>
 
             <p>
-                Lihat seluruh project, skill, board message,
+                Lihat seluruh project, skill, kontak &amp; pesan,
                 dan informasi portfolio developer.
             </p>
 
@@ -202,10 +203,35 @@
                 href="{{ route('portfolio') }}"
                 class="btn"
             >
-                Buka Portfolio
+                Buka Portofolio
             </a>
 
         </div>
+
+        <!-- {{-- CARD BLOG --}}
+        <div class="card">
+
+            <div class="icon">
+                📝
+            </div>
+
+            <h2>
+                Blog
+            </h2>
+
+            <p>
+                Baca catatan ngoding, tutorial singkat,
+                dan pengalaman pengembangan web.
+            </p>
+
+            <a
+                href="{{ route('blog.index') }}"
+                class="btn"
+            >
+                Buka Blog
+            </a>
+
+        </div> -->
 
         {{-- CARD DASHBOARD --}}
         <div class="card">
@@ -215,19 +241,19 @@
             </div>
 
             <h2>
-                Dashboard
+                Admin
             </h2>
 
             <p>
-                Kelola project, board message,
+                Kelola project, kontak &amp; pesan,
                 edit portfolio, dan akses admin panel.
             </p>
 
             <a
-                href="{{ route('admin.login') }}"
+                href="{{ route('admin.dashboard') }}"
                 class="btn"
             >
-                Masuk Dashboard
+                Buka Admin
             </a>
 
         </div>

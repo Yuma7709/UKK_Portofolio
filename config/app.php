@@ -99,6 +99,10 @@ return [
 
     'key' => env('APP_KEY'),
 
+    'admin_email' => env('ADMIN_EMAIL', 'yumaachmad2@gmail.com'),
+
+    'admin_fallback_email' => env('ADMIN_FALLBACK_EMAIL', 'admin@portfolio.local'),
+
     'previous_keys' => [
         ...array_filter(
             explode(',', (string) env('APP_PREVIOUS_KEYS', ''))

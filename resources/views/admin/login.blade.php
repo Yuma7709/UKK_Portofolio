@@ -17,14 +17,14 @@
         }
 
         :root{
-            --primary:#00d4ff;
-            --primary2:#2563eb;
-            --dark:#020617;
-            --dark2:#0f172a;
-            --card:rgba(15,23,42,.88);
-            --border:rgba(255,255,255,.08);
-            --text:#f8fafc;
-            --muted:#94a3b8;
+            --primary:#f87171;
+            --primary2:#dc2626;
+            --dark:#0d0d10;
+            --dark2:#111114;
+            --card:rgba(17,17,20,.88);
+            --border:rgba(255,255,255,.1);
+            --text:#ececf0;
+            --muted:#a1a1aa;
             --danger:#ef4444;
             --shadow:0 15px 40px rgba(0,0,0,.45);
         }
@@ -36,8 +36,8 @@
             align-items:center;
             padding:20px;
             background:
-                radial-gradient(circle at top left, rgba(0,212,255,.15), transparent 25%),
-                radial-gradient(circle at bottom right, rgba(37,99,235,.12), transparent 25%),
+                radial-gradient(circle at top left, rgba(248,113,113,.15), transparent 25%),
+                radial-gradient(circle at bottom right, rgba(220,38,38,.12), transparent 25%),
                 linear-gradient(to bottom,var(--dark),var(--dark2));
             overflow:hidden;
             position:relative;
@@ -109,7 +109,7 @@
             font-size:2rem;
             font-weight:800;
             color:white;
-            box-shadow:0 10px 30px rgba(0,212,255,.35);
+            box-shadow:0 10px 30px rgba(248,113,113,.35);
         }
 
         h2{
@@ -155,7 +155,7 @@
             width:100%;
             padding:15px 16px;
             border-radius:16px;
-            border:1px solid rgba(255,255,255,.08);
+            border:1px solid rgba(255,255,255,.1);
             background:rgba(255,255,255,.04);
             color:var(--text);
             outline:none;
@@ -169,7 +169,7 @@
 
         input:focus{
             border-color:var(--primary);
-            box-shadow:0 0 0 4px rgba(0,212,255,.12);
+            box-shadow:0 0 0 4px rgba(248,113,113,.12);
             background:rgba(255,255,255,.05);
         }
 
@@ -193,7 +193,7 @@
 
         .login-btn:hover{
             transform:translateY(-3px);
-            box-shadow:0 10px 25px rgba(0,212,255,.25);
+            box-shadow:0 10px 25px rgba(248,113,113,.25);
         }
 
         .footer-text{
@@ -217,15 +217,17 @@
         }
 
     </style>
+    <link rel="stylesheet" href="{{ asset('css/portfolio-theme.css') }}">
 </head>
 
 <body>
 
 <div class="login-card">
 
-    <div class="logo">
-        A
-    </div>
+    <a href="{{ route('portfolio') }}" class="logo" aria-label="Portofolio">
+        P
+    </a>
+
 
     <h2>
         Login Admin
@@ -252,12 +254,12 @@
 
         <div class="input-group">
 
-            <label>Username</label>
+            <label>Email / Username Admin</label>
 
             <input
                 type="text"
                 name="username"
-                placeholder="Masukkan username"
+                placeholder="Masukkan email admin"
                 required
             >
 
@@ -286,7 +288,8 @@
     </form>
 
     <div class="footer-text">
-        © 2026 Yuma Portfolio
+        © {{ date('Y') }} {{ profile('nama', 'Yuma Achmad Fairuza') }}
+
     </div>
 
 </div>

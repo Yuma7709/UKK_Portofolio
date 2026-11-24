@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Message;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MessageController extends Controller
 {
@@ -14,39 +15,48 @@ class MessageController extends Controller
     */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'pesan' => 'required',
+        $data = $request->validate([
+            'nama' => 'required|string|max:100',
+            'kesan' => 'required|string|max:255',
+            'pesan' => 'required|string|max:1000',
         ]);
 
-        Message::create([
-            'nama' => $request->nama,
-            'pesan' => $request->pesan,
-        ]);
+        $token = $this->visitorToken($request);
+        $data['owner_token'] = $token;
 
-        return redirect()->back()->with('success', 'Message berhasil dikirim');
+        Message::create($data);
+
+        return redirect()->to(route('portfolio').'#contact')
+            ->with('success_message', 'Terima kasih atas kesan dan pesannya!')
+            ->cookie('visitor_token', $token, 525600);
     }
 
     /*
     |-----------------------------------------
-    | UPDATE MESSAGE (EDIT FIX ERROR KAMU)
+    | UPDATE MESSAGE
     |-----------------------------------------
     */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama' => 'required',
-            'pesan' => 'required',
-        ]);
-
         $message = Message::findOrFail($id);
+        abort_unless($this->boleh($request, $message), 403);
 
-        $message->update([
-            'nama' => $request->nama,
-            'pesan' => $request->pesan,
+        $data = $request->validate([
+            'nama' => 'required|string|max:100',
+            'kesan' => 'required|string|max:255',
+            'pesan' => 'required|string|max:1000',
         ]);
 
-        return redirect()->back()->with('success', 'Message berhasil diupdate');
+        $message->update($data);
+
+        if (session('admin_login')) {
+            return redirect()->to(route('admin.dashboard').'#message-konten')
+                ->with('success', 'Pesan berhasil diperbarui.')
+                ->with('updated', ['type' => 'message', 'id' => $message->id]);
+        }
+
+        return redirect()->to(route('portfolio').'#contact')
+            ->with('success_message', 'Perubahan berhasil disimpan.');
     }
 
     /*
@@ -54,11 +64,43 @@ class MessageController extends Controller
     | DELETE MESSAGE
     |-----------------------------------------
     */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $message = Message::findOrFail($id);
+        abort_unless($this->boleh($request, $message), 403);
+
         $message->delete();
 
-        return redirect()->back()->with('success', 'Message berhasil dihapus');
+        return redirect()->back()
+            ->with('success', 'Pesan berhasil dihapus.')
+            ->with('success_message', 'Pesan berhasil dihapus.');
+    }
+
+    /*
+    |-----------------------------------------
+    | HELPER
+    |-----------------------------------------
+    */
+    private function visitorToken(Request $request): string
+    {
+        $token = $request->cookie('visitor_token') ?? session('visitor_token');
+
+        if (! $token) {
+            $token = (string) Str::uuid();
+            session(['visitor_token' => $token]);
+        }
+
+        return $token;
+    }
+
+    private function boleh(Request $request, Message $message): bool
+    {
+        if (session('admin_login')) {
+            return true;
+        }
+
+        $token = $request->cookie('visitor_token') ?? session('visitor_token');
+
+        return $token && $message->owner_token === $token;
     }
 }
